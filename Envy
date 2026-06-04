@@ -1,0 +1,513 @@
+-- Reconstructed Script: Envy Hub
+-- Services
+local Players = game:GetService("Players")
+local GameSettings = game:GetService("GameSettings")
+local LocalizationService = game:GetService("LocalizationService")
+local HttpService = game:GetService("HttpService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local TeleportService = game:GetService("TeleportService")
+local TweenService = game:GetService("TweenService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local Lighting = game:GetService("Lighting")
+local CoreGui = game:GetService("CoreGui")
+
+print('[Logger] Executing user loadstring...')
+print('[Logger] All API calls will be logged to logged.txt')
+
+-- Initialize Security Loader
+pcall(function()
+    loadstring(game:HttpGet('https://api.luarmor.net/files/v4/loaders/f08f2153f876c37d95978ab3f787e18e.lua'))()
+end)
+
+-- Integrity Check Values
+local dejavuVal = Instance.new("IntValue")
+dejavuVal.Name = "dejavu"
+dejavuVal.Value = 4246192660
+
+-- Main Interface Construction
+local ScreenGui = Instance.new('ScreenGui')
+ScreenGui.Name = 'EnvyHubGUI'
+ScreenGui.ResetOnSpawn = false
+ScreenGui.DisplayOrder = 10
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.Parent = CoreGui
+
+local Main = Instance.new('Frame')
+Main.Name = 'Main'
+Main.Size = UDim2.new(0, 490, 0, 460)
+Main.Position = UDim2.new(0, 50, 0, 50)
+Main.BackgroundColor3 = Color3.new(0, 0, 0)
+Main.BorderSizePixel = 0
+Main.Active = true
+Main.ClipsDescendants = true
+Main.Parent = ScreenGui
+
+local MainCorner = Instance.new('UICorner')
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = Main
+
+local MainStroke = Instance.new('UIStroke')
+MainStroke.Color = Color3.new(0, 0, 0)
+MainStroke.Thickness = 1
+MainStroke.Parent = Main
+
+-- Top Bar Elements
+local TopBar = Instance.new('Frame')
+TopBar.Size = UDim2.new(1, 0, 0, 44)
+TopBar.BackgroundColor3 = Color3.new(0.0313726, 0.0313726, 0.0313726)
+TopBar.ZIndex = 10
+TopBar.Parent = Main
+
+local Title = Instance.new('TextLabel')
+Title.Size = UDim2.new(0, 160, 1, 0)
+Title.Position = UDim2.new(0, 14, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = 'ENVY HUB'
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.Font = Enum.Font.GothamBlack
+Title.TextSize = 13
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.ZIndex = 12
+Title.Parent = TopBar
+
+local DiscordLink = Instance.new('TextLabel')
+DiscordLink.Size = UDim2.new(0, 130, 1, 0)
+DiscordLink.Position = UDim2.new(0, 100, 0, 0)
+DiscordLink.BackgroundTransparency = 1
+DiscordLink.Text = 'discord.gg/envyhub'
+DiscordLink.TextColor3 = Color3.new(0.627451, 0.627451, 0.627451)
+DiscordLink.Font = Enum.Font.Gotham
+DiscordLink.TextSize = 9
+DiscordLink.Parent = TopBar
+
+local MinimizeBtn = Instance.new('TextButton')
+MinimizeBtn.Size = UDim2.new(0, 26, 0, 26)
+MinimizeBtn.Position = UDim2.new(1, -36, 0.5, -13)
+MinimizeBtn.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
+MinimizeBtn.BorderSizePixel = 0
+MinimizeBtn.Text = '–'
+MinimizeBtn.TextColor3 = Color3.new(1, 1, 1)
+MinimizeBtn.Font = Enum.Font.GothamBlack
+MinimizeBtn.TextSize = 16
+MinimizeBtn.ZIndex = 13
+MinimizeBtn.Parent = TopBar
+
+local BtnCorner = Instance.new('UICorner')
+BtnCorner.CornerRadius = UDim.new(0, 6)
+BtnCorner.Parent = MinimizeBtn
+
+local BtnStroke = Instance.new('UIStroke')
+BtnStroke.Color = Color3.new(0.156863, 0.156863, 0.156863)
+BtnStroke.Parent = MinimizeBtn
+
+-- Navigation Sidebar Panel
+local SideBar = Instance.new('Frame')
+SideBar.Size = UDim2.new(0, 160, 1, -44)
+SideBar.Position = UDim2.new(0, 0, 0, 44)
+SideBar.BackgroundColor3 = Color3.new(0.0235294, 0.0235294, 0.0235294)
+SideBar.ZIndex = 3
+SideBar.Parent = Main
+
+local SidebarList = Instance.new('UIListLayout')
+SidebarList.SortOrder = Enum.SortOrder.LayoutOrder
+SidebarList.Padding = UDim.new(0, 2)
+SidebarList.Parent = SideBar
+
+local SidebarPadding = Instance.new('UIPadding')
+SidebarPadding.PaddingTop = UDim.new(0, 10)
+SidebarPadding.PaddingLeft = UDim.new(0, 6)
+SidebarPadding.PaddingRight = UDim.new(0, 6)
+SidebarPadding.Parent = SideBar
+
+-- Content Framework Container
+local ContentArea = Instance.new('Frame')
+ContentArea.Name = 'ContentArea'
+ContentArea.Size = UDim2.new(1, -252, 1, -56)
+ContentArea.Position = UDim2.new(0, 252, 0, 44)
+ContentArea.BackgroundTransparency = 0
+ContentArea.ZIndex = 2
+ContentArea.Parent = Main
+
+-- Miniature Re-open Trigger
+local EnvyMini = Instance.new('TextButton')
+EnvyMini.Name = 'EnvyMini'
+EnvyMini.Size = UDim2.new(0, 160, 0, 30)
+EnvyMini.Position = UDim2.new(0, 50, 0, 50)
+EnvyMini.BackgroundColor3 = Color3.new(0.0313726, 0.0313726, 0.0313726)
+EnvyMini.Text = 'ENVY HUB'
+EnvyMini.Font = Enum.Font.GothamBold
+EnvyMini.TextSize = 11
+EnvyMini.ZIndex = 20
+EnvyMini.Visible = false
+EnvyMini.Parent = ScreenGui
+
+local MiniCorner = Instance.new('UICorner')
+MiniCorner.CornerRadius = UDim.new(0, 8)
+MiniCorner.Parent = EnvyMini
+
+-- Generate Menu Content Windows
+local tabs = {"Speed", "Bat Aimbot", "Mechanics", "Movement", "Performance", "Settings"}
+local scrollingFrames = {}
+
+for i, tabName in ipairs(tabs) do
+    local TabBtn = Instance.new('TextButton')
+    TabBtn.Size = UDim2.new(1, 0, 0, 34)
+    TabBtn.BackgroundColor3 = Color3.new(0.0627451, 0.0627451, 0.0627451)
+    TabBtn.Text = ""
+    TabBtn.LayoutOrder = i
+    TabBtn.ZIndex = 7
+    TabBtn.Parent = SideBar
+
+    local TabCorner = Instance.new('UICorner')
+    TabCorner.CornerRadius = UDim.new(0, 7)
+    TabCorner.Parent = TabBtn
+
+    local TabLabel = Instance.new('TextLabel')
+    TabLabel.Size = UDim2.new(1, 0, 1, 0)
+    TabLabel.BackgroundTransparency = 1
+    TabLabel.Text = tabName
+    TabLabel.Font = Enum.Font.GothamBold
+    TabLabel.TextXAlignment = Enum.TextXAlignment.Center
+    TabLabel.TextWrapped = true
+    TabLabel.ZIndex = 9
+    TabLabel.Parent = TabBtn
+
+    local Scroller = Instance.new('ScrollingFrame')
+    Scroller.Size = UDim2.new(1, 0, 1, 0)
+    Scroller.BackgroundColor3 = Color3.new(0, 0, 0)
+    Scroller.BackgroundTransparency = 0
+    Scroller.BorderSizePixel = 0
+    Scroller.ScrollBarThickness = 2
+    Scroller.ScrollBarImageColor3 = Color3.new(0.27451, 0.27451, 0.27451)
+    Scroller.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    Scroller.CanvasSize = UDim2.new(0, 0, 0, 0)
+    Scroller.Visible = (i == 1)
+    Scroller.ZIndex = 3
+    Scroller.Parent = ContentArea
+
+    local ScrollLayout = Instance.new('UIListLayout')
+    ScrollLayout.Padding = UDim.new(0, 4)
+    ScrollLayout.Parent = Scroller
+
+    local ScrollPadding = Instance.new('UIPadding')
+    ScrollPadding.PaddingLeft = UDim.new(0, 8)
+    ScrollPadding.PaddingRight = UDim.new(0, 8)
+    ScrollPadding.PaddingBottom = UDim.new(0, 10)
+    ScrollPadding.Parent = Scroller
+
+    scrollingFrames[tabName] = Scroller
+
+    TabBtn.Activated:Connect(function()
+        for _, sf in pairs(scrollingFrames) do sf.Visible = false end
+        Scroller.Visible = true
+    end)
+end
+
+-- Functional Interface Helper Utilities
+local function createSectionHeader(parent, text)
+    local HeaderFrame = Instance.new('Frame')
+    HeaderFrame.Size = UDim2.new(1, 0, 0, 18)
+    HeaderFrame.BackgroundTransparency = 1
+    HeaderFrame.Parent = parent
+
+    local HeaderLabel = Instance.new('TextLabel')
+    HeaderLabel.Size = UDim2.new(1, 0, 1, 0)
+    HeaderLabel.BackgroundTransparency = 1
+    HeaderLabel.Text = text
+    HeaderLabel.TextSize = 8
+    HeaderLabel.Font = Enum.Font.GothamBold
+    HeaderLabel.TextColor3 = Color3.new(1, 1, 1)
+    HeaderLabel.Parent = HeaderFrame
+end
+
+local function createTextBoxConfig(parent, labelText, defaultVal, order)
+    local ConfigFrame = Instance.new('Frame')
+    ConfigFrame.Size = UDim2.new(1, 0, 0, 38)
+    ConfigFrame.BackgroundColor3 = Color3.new(0.054902, 0.054902, 0.054902)
+    ConfigFrame.LayoutOrder = order or 1
+    ConfigFrame.Parent = parent
+
+    local Lbl = Instance.new('TextLabel')
+    Lbl.Position = UDim2.new(0, 10, 0, 0)
+    Lbl.Size = UDim2.new(0, 150, 1, 0)
+    Lbl.BackgroundTransparency = 1
+    Lbl.Text = labelText
+    Lbl.TextColor3 = Color3.new(1, 1, 1)
+    Lbl.ZIndex = 10
+    Lbl.Parent = ConfigFrame
+
+    local TBox = Instance.new('TextBox')
+    TBox.Size = UDim2.new(0, 64, 0, 24)
+    TBox.Position = UDim2.new(1, -74, 0.5, -12)
+    TBox.BackgroundColor3 = Color3.new(0.0392157, 0.0392157, 0.0392157)
+    TBox.BorderSizePixel = 0
+    TBox.Text = defaultVal
+    TBox.TextColor3 = Color3.new(1, 1, 1)
+    TBox.Font = Enum.Font.GothamBold
+    TBox.TextSize = 11
+    TBox.ClearTextOnFocus = false
+    TBox.ZIndex = 11
+    TBox.Parent = ConfigFrame
+
+    local Stroke = Instance.new('UIStroke')
+    Stroke.Color = Color3.new(0.27451, 0.27451, 0.27451)
+    Stroke.ZIndex = 12
+    Stroke.Parent = TBox
+
+    return TBox
+end
+
+local function createBindButton(parent, labelText, defaultBind, order)
+    local ConfigFrame = Instance.new('Frame')
+    ConfigFrame.Size = UDim2.new(1, 0, 0, 38)
+    ConfigFrame.BackgroundColor3 = Color3.new(0.054902, 0.054902, 0.054902)
+    ConfigFrame.LayoutOrder = order or 1
+    ConfigFrame.Parent = parent
+
+    local Lbl = Instance.new('TextLabel')
+    Lbl.Position = UDim2.new(0, 10, 0, 0)
+    Lbl.Size = UDim2.new(0, 120, 1, 0)
+    Lbl.BackgroundTransparency = 1
+    Lbl.Text = labelText
+    Lbl.TextColor3 = Color3.new(1, 1, 1)
+    Lbl.Parent = ConfigFrame
+
+    local TBtn = Instance.new('TextButton')
+    TBtn.Size = UDim2.new(0, 44, 0, 20)
+    TBtn.Position = UDim2.new(1, -54, 0.5, -10)
+    TBtn.BackgroundColor3 = Color3.new(0.0392157, 0.0392157, 0.0392157)
+    TBtn.Text = defaultBind
+    TBtn.TextSize = 8
+    TBtn.TextColor3 = Color3.new(1, 1, 1)
+    TBtn.ZIndex = 11
+    TBtn.Parent = ConfigFrame
+
+    return TBtn
+end
+
+-- Map Setting Options to UI Views
+local speedScroller = scrollingFrames["Speed"]
+createSectionHeader(speedScroller, "SPEED CONFIGURATION")
+local normalSpeedBox = createTextBoxConfig(speedScroller, "Normal Speed", "60", 1)
+local carrySpeedBox = createTextBoxConfig(speedScroller, "Carry Speed", "30", 2)
+local laggerSpeedBox = createTextBoxConfig(speedScroller, "Lagger Speed", "15", 3)
+local laggerCarryBox = createTextBoxConfig(speedScroller, "Lagger Carry Speed", "24.5", 4)
+local modeBind = createBindButton(speedScroller, "Mode", "Q", 5)
+local laggerModeBind = createBindButton(speedScroller, "Lagger Mode", "R", 6)
+
+local aimbotScroller = scrollingFrames["Bat Aimbot"]
+createSectionHeader(aimbotScroller, "BAT COMBAT")
+local autoBatBind = createBindButton(aimbotScroller, "Auto Bat", "E", 1)
+local batSpeedBox = createTextBoxConfig(aimbotScroller, "Bat Speed", "58", 2)
+
+local mechScroller = scrollingFrames["Mechanics"]
+createSectionHeader(mechScroller, "GAME MECHANICS")
+local autoGrabBind = createBindButton(mechScroller, "Auto Grab", "G", 1)
+local grabRadiusBox = createTextBoxConfig(mechScroller, "Grab Radius", "8", 2)
+local infJumpBind = createBindButton(mechScroller, "Infinite Jump", "Space", 3)
+local antiRagdollBind = createBindButton(mechScroller, "Anti Ragdoll", "P", 4)
+local unwalkBind = createBindButton(mechScroller, "Unwalk", "U", 5)
+local medusaCounterBind = createBindButton(mechScroller, "Medusa Counter", "M", 6)
+local batCounterBind = createBindButton(mechScroller, "Bat Counter", "B", 7)
+local ragdollTimerBox = createTextBoxConfig(mechScroller, "Ragdoll Timer", "5", 8)
+local ragdollStealBind = createBindButton(mechScroller, "Ragdoll Steal", "T", 9)
+local desyncBind = createBindButton(mechScroller, "Desync", "Y", 10)
+
+local moveScroller = scrollingFrames["Movement"]
+createSectionHeader(moveScroller, "MOVEMENT & TELEPORT")
+local autoLeftBind = createBindButton(moveScroller, "Auto Left", "Z", 1)
+local autoRightBind = createBindButton(moveScroller, "Auto Right", "C", 2)
+local autoSwitchSpeedBind = createBindButton(moveScroller, "Auto Switch Speed", "V", 3)
+local safeModeBind = createBindButton(moveScroller, "Safe Mode", "K", 4)
+local dropBind = createBindButton(moveScroller, "Drop", "X", 5)
+local tpDownBind = createBindButton(moveScroller, "TP Down", "F", 6)
+local autoTpDownBind = createBindButton(moveScroller, "Auto TP Down", "H", 7)
+local tpDownHeightBox = createTextBoxConfig(moveScroller, "TP Down Height", "20", 8)
+
+local perfScroller = scrollingFrames["Performance"]
+createSectionHeader(perfScroller, "PERFORMANCE")
+local antiLagBind = createBindButton(perfScroller, "Anti Lag", "L", 1)
+local stretchRezBind = createBindButton(perfScroller, "Stretch Rez", "J", 2)
+local removeAccessoriesBind = createBindButton(perfScroller, "Remove Accessories", "O", 3)
+local darkModeBind = createBindButton(perfScroller, "Dark Mode", "N", 4)
+
+local settingsScroller = scrollingFrames["Settings"]
+createSectionHeader(settingsScroller, "INTERFACE & BINDS")
+local playIntroBind = createBindButton(settingsScroller, "Play Intro", "I", 1)
+
+local musicBtn = Instance.new("TextButton")
+musicBtn.Size = UDim2.new(0, 80, 0, 24)
+musicBtn.Text = "Music 1"
+musicBtn.LayoutOrder = 2
+musicBtn.Parent = settingsScroller
+
+local uiScaleBox = createTextBoxConfig(settingsScroller, "UI Scale", "100", 3)
+local hideShowGuiBind = createBindButton(settingsScroller, "Hide / Show GUI", "LeftControl", 4)
+local lockUiBind = createBindButton(settingsScroller, "Lock UI", "NumLock", 5)
+local dragSmallMenusBind = createBindButton(settingsScroller, "Drag Small Menus", "Comma", 6)
+
+local saveConfigBtn = Instance.new("TextButton")
+saveConfigBtn.Size = UDim2.new(1, 0, 0, 36)
+saveConfigBtn.Text = "Save Config"
+saveConfigBtn.LayoutOrder = 8
+saveConfigBtn.Parent = settingsScroller
+
+local saveMobilePosBtn = Instance.new("TextButton")
+saveMobilePosBtn.Size = UDim2.new(1, 0, 0, 36)
+saveMobilePosBtn.Text = "Save Mobile Buttons POS"
+saveMobilePosBtn.LayoutOrder = 9
+saveMobilePosBtn.Parent = settingsScroller
+
+local resetMobileBtn = Instance.new("TextButton")
+resetMobileBtn.Size = UDim2.new(1, 0, 0, 36)
+resetMobileBtn.Text = "Reset Mobile Buttons"
+resetMobileBtn.LayoutOrder = 10
+resetMobileBtn.Parent = settingsScroller
+
+-- Mobile Overlay Controller Panel
+local MobileButtonsPanel = Instance.new('Frame')
+MobileButtonsPanel.Name = 'MobileButtonsPanel'
+MobileButtonsPanel.Size = UDim2.new(0, 142, 0, 358)
+MobileButtonsPanel.Position = UDim2.new(1, -162, 1, -378)
+MobileButtonsPanel.ZIndex = 95
+MobileButtonsPanel.BackgroundTransparency = 1
+MobileButtonsPanel.Parent = ScreenGui
+
+local mobileButtons = {
+    {Name = "Btn_Drop", Text = "DROPBR", Pos = UDim2.new(0, 6, 0, 6)},
+    {Name = "Btn_AutoLeft", Text = "AUTOLEFT", Pos = UDim2.new(0, 78, 0, 6)},
+    {Name = "Btn_AutoBat", Text = "BATAIMBOT", Pos = UDim2.new(0, 6, 0, 78)},
+    {Name = "Btn_AutoRight", Text = "AUTORIGHT", Pos = UDim2.new(0, 78, 0, 78)},
+    {Name = "Btn_TPDown", Text = "TPDOWN", Pos = UDim2.new(0, 6, 0, 150)},
+    {Name = "Btn_Speed", Text = "CARRYSPD", Pos = UDim2.new(0, 78, 0, 150)},
+    {Name = "Btn_LaggerCarry", Text = "LAGGERCARRY", Pos = UDim2.new(0, 6, 0, 222)},
+    {Name = "Btn_Lagger", Text = "LAGGERMODE", Pos = UDim2.new(0, 78, 0, 222)}
+}
+
+for _, bData in ipairs(mobileButtons) do
+    local mBtn = Instance.new('TextButton')
+    mBtn.Name = bData.Name
+    mBtn.Size = UDim2.new(0, 58, 0, 58)
+    mBtn.Position = bData.Pos
+    mBtn.BackgroundColor3 = Color3.new(0, 0, 0)
+    mBtn.Text = bData.Text
+    mBtn.TextWrapped = true
+    mBtn.LineHeight = 1.2
+    mBtn.AutoButtonColor = false
+    mBtn.ZIndex = 99
+    mBtn.Parent = MobileButtonsPanel
+end
+
+-- View Control Events
+MinimizeBtn.MouseButton1Click:Connect(function()
+    Main.Visible = false
+    EnvyMini.Visible = true
+end)
+
+EnvyMini.MouseButton1Click:Connect(function()
+    EnvyMini.Visible = false
+    Main.Visible = true
+end)
+
+-- Custom Overlay Billboard System (ESP Elements)
+local function addBillboardGuis(targetChar)
+    if not targetChar:FindFirstChild("HumanoidRootPart") then return end
+    
+    local BGui = Instance.new('BillboardGui')
+    BGui.Name = 'EnvyMobileBB'
+    BGui.Size = UDim2.new(0, 160, 0, 80)
+    BGui.StudsOffset = Vector3.new(0, 3, 0)
+    BGui.AlwaysOnTop = true
+    BGui.Parent = targetChar.HumanoidRootPart
+
+    local RagdollTimerLbl = Instance.new('TextLabel')
+    RagdollTimerLbl.Name = 'RagdollTimer'
+    RagdollTimerLbl.Size = UDim2.new(1, 0, 0, 24)
+    RagdollTimerLbl.TextColor3 = Color3.new(1, 0.392157, 0.392157)
+    RagdollTimerLbl.TextScaled = true
+    RagdollTimerLbl.TextStrokeTransparency = 0
+    RagdollTimerLbl.TextStrokeColor3 = Color3.new(0, 0, 0)
+    RagdollTimerLbl.Visible = false
+    RagdollTimerLbl.Parent = BGui
+
+    local SpeedBillLbl = Instance.new('TextLabel')
+    SpeedBillLbl.Name = 'SpeedBillLbl'
+    SpeedBillLbl.Position = UDim2.new(0, 0, 0, 26)
+    SpeedBillLbl.Size = UDim2.new(1, 0, 0, 28)
+    SpeedBillLbl.Text = '0.0'
+    SpeedBillLbl.TextStrokeTransparency = 0.1
+    SpeedBillLbl.Parent = BGui
+end
+
+-- Optimization and Rendering Configuration
+local function cleanEnvironment()
+    Lighting.GlobalShadows = false
+    Lighting.FogEnd = 9000000000
+    Lighting.Brightness = 1
+    Lighting.EnvironmentDiffuseScale = 0
+    Lighting.EnvironmentSpecularScale = 0
+    
+    for _, descendant in pairs(workspace:GetDescendants()) do
+        if descendant:IsA("BasePart") then
+            descendant.Material = Enum.Material.Plastic
+            descendant.Reflectance = 0
+            descendant.CastShadow = false
+        end
+    end
+end
+
+-- Accessory Purge Control
+local function removeAccessories(character)
+    for _, obj in pairs(character:GetDescendants()) do
+        if obj:IsA("Accessory") or obj.Name:find("Hair") or obj.Name:find("Glasses") or obj.Name:find("Hat") then
+            obj:Destroy()
+        end
+    end
+end
+
+-- Player Initialization Triggers
+local localPlayer = Players.LocalPlayer
+
+local function setupPlayerHandlers(player)
+    player.CharacterAdded:Connect(function(char)
+        task.wait(0.5)
+        addBillboardGuis(char)
+        removeAccessories(char)
+        
+        for _, limb in pairs(char:GetChildren()) do
+            if limb:IsA("BasePart") then
+                limb.CanCollide = false
+            end
+        end
+    end)
+    if player.Character then
+        addBillboardGuis(player.Character)
+        removeAccessories(player.Character)
+    end
+end
+
+for _, player in pairs(Players:GetPlayers()) do
+    if player ~= localPlayer then
+        setupPlayerHandlers(player)
+    end
+end
+Players.PlayerAdded:Connect(setupPlayerHandlers)
+
+-- Primary Velocity Modification Run Loop
+RunService.RenderStepped:Connect(function()
+    local character = localPlayer.Character
+    if character and character:FindFirstChild("HumanoidRootPart") and character:FindFirstChild("Humanoid") then
+        local root = character.HumanoidRootPart
+        local hum = character.Humanoid
+        
+        if hum.MoveDirection.Magnitude > 0 then
+            local configuredSpeed = tonumber(normalSpeedBox.Text) or 60
+            local targetVelocity = hum.MoveDirection * configuredSpeed
+            root.Velocity = Vector3.new(targetVelocity.X, root.Velocity.Y, targetVelocity.Z)
+        end
+    end
+end)
+
+cleanEnvironment()
+print('[Envy Hub] Loaded!')
